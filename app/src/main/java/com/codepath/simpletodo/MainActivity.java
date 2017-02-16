@@ -1,6 +1,7 @@
 package com.codepath.simpletodo;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EditItemDialogFragment.EditNameDialogListener {
 
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Simple Todo");
+        getSupportActionBar().setTitle(R.string.simple_todo);
 
     }
 
@@ -56,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         writeItems();
 
     }
+
+    private void showEditDialog(String text, int pos) {
+        FragmentManager fm = getSupportFragmentManager();
+        EditItemDialogFragment editNameDialogFragment = EditItemDialogFragment.newInstance(text, pos);
+        editNameDialogFragment.show(fm, "fragment_edit_name");
+    }
+
 
     private void setupListViewListener() {
         lvItems.setOnItemLongClickListener(
@@ -75,10 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
-                        intent.putExtra("pos", position);
-                        intent.putExtra("text", ((TextView) view).getText().toString());
-                        startActivityForResult(intent, REQUEST_CODE);
+                        showEditDialog(((TextView) view).getText().toString(), position);
+//                        Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
+//                        intent.putExtra("pos", position);
+//                        intent.putExtra("text", ((TextView) view).getText().toString());
+//                        startActivityForResult(intent, REQUEST_CODE);
                     }
 
                 });
@@ -113,5 +122,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onFinishEditDialog(String newText, int pos) {
+        items.set(pos, newText);
+        itemsAdapter.notifyDataSetChanged();
+        writeItems();
+
     }
 }

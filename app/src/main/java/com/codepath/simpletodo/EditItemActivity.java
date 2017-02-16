@@ -22,6 +22,7 @@ public class EditItemActivity extends AppCompatActivity {
         String text = startIntent.getStringExtra("text");
         textField = (EditText) findViewById(R.id.etItem);
         textField.setText(text);
+        textField.setSelection(textField.getText().length());
 
         setupToolbar();
 
@@ -35,7 +36,7 @@ public class EditItemActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        getSupportActionBar().setTitle("Edit Item");
+        getSupportActionBar().setTitle(R.string.edit_item);
 
     }
 

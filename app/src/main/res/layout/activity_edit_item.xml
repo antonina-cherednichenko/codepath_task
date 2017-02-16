@@ -24,9 +24,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Edit Item Below:"
-            android:textSize="22sp"
+            android:layout_marginBottom="@dimen/edit_activity_margin1"
+            android:text="@string/edit_action"
+            android:textSize="@dimen/edit_activity_font_large"
             android:textStyle="bold" />
 
         <EditText
@@ -39,9 +39,9 @@
             android:id="@+id/btnEditItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="@dimen/edit_activity_margin2"
             android:onClick="onSaveEditItem"
-            android:text="Save" />
+            android:text="@string/save_edit_action" />
 
 
     </LinearLayout>

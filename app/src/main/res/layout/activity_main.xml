@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -39,7 +38,7 @@
             android:layout_alignTop="@+id/btnAddItem"
             android:layout_toLeftOf="@+id/btnAddItem"
             android:layout_toStartOf="@+id/btnAddItem"
-            android:hint="Enter a new item" />
+            android:hint="@string/enter_item" />
 
 
         <Button
@@ -50,7 +49,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="onAddItem"
-            android:text="Add Item" />
+            android:text="@string/add_item" />
 
 
     </RelativeLayout>
