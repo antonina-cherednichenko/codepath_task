@@ -6,11 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.codepath.simpletodo.EditItemActivity">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    tools:context="com.codepath.simpletodo.EditItemDialogFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,13 +17,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/edit_activity_margin1"
-            android:text="@string/edit_action"
-            android:textSize="@dimen/edit_activity_font_large"
-            android:textStyle="bold" />
+
 
         <EditText
             android:id="@+id/etItem"

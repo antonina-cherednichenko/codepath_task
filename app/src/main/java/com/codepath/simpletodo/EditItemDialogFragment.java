@@ -32,6 +32,7 @@ public class EditItemDialogFragment extends DialogFragment {
 
     public static EditItemDialogFragment newInstance(String text, int pos) {
         EditItemDialogFragment frag = new EditItemDialogFragment();
+        frag.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         Bundle args = new Bundle();
         args.putString("text", text);
         args.putInt("pos", pos);
@@ -43,7 +44,10 @@ public class EditItemDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_edit_item, container);
+
+        View rootView = inflater.inflate(R.layout.activity_edit_item, container);
+        getDialog().setTitle(R.string.edit_action);
+        return rootView;
     }
 
 
@@ -56,7 +60,7 @@ public class EditItemDialogFragment extends DialogFragment {
 
         String text = getArguments().getString("text");
         final int pos = getArguments().getInt("pos");
-        getDialog().setTitle("hello");
+
 
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

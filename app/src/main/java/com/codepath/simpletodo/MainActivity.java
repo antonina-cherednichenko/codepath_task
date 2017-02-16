@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
     ArrayAdapter<String> itemsAdapter;
     ListView lvItems;
 
-    private final int REQUEST_CODE = 20;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +35,8 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
         lvItems.setAdapter(itemsAdapter);
 
         setupListViewListener();
-        setupToolbar();
-
     }
 
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setTitle(R.string.simple_todo);
-
-    }
 
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
@@ -57,13 +46,6 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
         writeItems();
 
     }
-
-    private void showEditDialog(String text, int pos) {
-        FragmentManager fm = getSupportFragmentManager();
-        EditItemDialogFragment editNameDialogFragment = EditItemDialogFragment.newInstance(text, pos);
-        editNameDialogFragment.show(fm, "fragment_edit_name");
-    }
-
 
     private void setupListViewListener() {
         lvItems.setOnItemLongClickListener(
@@ -83,25 +65,13 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        showEditDialog(((TextView) view).getText().toString(), position);
-//                        Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
-//                        intent.putExtra("pos", position);
-//                        intent.putExtra("text", ((TextView) view).getText().toString());
-//                        startActivityForResult(intent, REQUEST_CODE);
+                        FragmentManager fm = getSupportFragmentManager();
+                        EditItemDialogFragment editNameDialogFragment = EditItemDialogFragment.newInstance(((TextView) view).getText().toString(), position);
+                        editNameDialogFragment.show(fm, "fragment_edit_name");
+
                     }
 
                 });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            String text = data.getStringExtra("text");
-            int pos = data.getIntExtra("pos", 0);
-            items.set(pos, text);
-            itemsAdapter.notifyDataSetChanged();
-            writeItems();
-        }
     }
 
     private void readItems() {
