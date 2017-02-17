@@ -1,10 +1,8 @@
 package com.codepath.simpletodo;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,17 +10,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements EditItemDialogFragment.EditNameDialogListener {
 
-    ArrayList<String> items;
-    ArrayAdapter<String> itemsAdapter;
-    ListView lvItems;
+    private ArrayList<Note> items;
+    private ArrayAdapter<Note> itemsAdapter;
+    private ListView lvItems;
+    private NoteDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +25,9 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
         setContentView(R.layout.activity_main);
 
         lvItems = (ListView) findViewById(R.id.lvItems);
-        readItems();
+        dbHelper = NoteDatabaseHelper.getInstance(this);
+        items = (ArrayList) dbHelper.getAllNotes();
+       
         itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
 
@@ -41,9 +38,13 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
     public void onAddItem(View v) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
+
+        Note newNote = new Note();
+        newNote.setText(itemText);
+
+        itemsAdapter.add(newNote);
+        dbHelper.addNote(newNote);
         etNewItem.setText("");
-        writeItems();
 
     }
 
@@ -53,9 +54,11 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
 
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        Note removeNote = items.get(position);
                         items.remove(position);
+                        dbHelper.removeNote(removeNote);
                         itemsAdapter.notifyDataSetChanged();
-                        writeItems();
+
                         return true;
                     }
                 });
@@ -74,31 +77,14 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
                 });
     }
 
-    private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            items = new ArrayList<>(FileUtils.readLines(todoFile));
-        } catch (IOException e) {
-            items = new ArrayList<>();
-        }
-    }
-
-    private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            FileUtils.writeLines(todoFile, items);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onFinishEditDialog(String newText, int pos) {
-        items.set(pos, newText);
+        Note note = items.get(pos);
+        note.setText(newText);
+        items.set(pos, note);
         itemsAdapter.notifyDataSetChanged();
-        writeItems();
+
+        dbHelper.updateNote(note);
 
     }
 }
