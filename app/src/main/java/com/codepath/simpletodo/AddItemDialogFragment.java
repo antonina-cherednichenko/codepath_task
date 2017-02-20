@@ -32,7 +32,7 @@ public class AddItemDialogFragment extends DialogFragment {
 
     public static AddItemDialogFragment newInstance() {
         AddItemDialogFragment frag = new AddItemDialogFragment();
-//        frag.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+        frag.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         return frag;
     }
 
@@ -42,7 +42,7 @@ public class AddItemDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.activity_add_item, container);
-//        getDialog().setTitle(R.string.edit_action);
+        getDialog().setTitle(R.string.add_item);
         return rootView;
     }
 
