@@ -68,7 +68,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 //check if position exists
                 if (position != RecyclerView.NO_POSITION) {
                     FragmentManager fm = ((MainActivity) context).getSupportFragmentManager();
-                    EditItemDialogFragment editNameDialogFragment = EditItemDialogFragment.newInstance(notes.get(position).getText(), position);
+                    EditItemDialogFragment editNameDialogFragment = EditItemDialogFragment.newInstance(notes.get(position), position);
                     editNameDialogFragment.show(fm, "fragment_edit_name");
                 }
             }

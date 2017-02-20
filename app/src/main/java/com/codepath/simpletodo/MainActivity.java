@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
 
 
     @Override
-    public void onFinishEditDialog(String newText, int pos) {
-        Note note = items.get(pos);
-        note.setText(newText);
+    public void onFinishEditDialog(Note note, int pos) {
         items.set(pos, note);
         itemsAdapter.notifyDataSetChanged();
 

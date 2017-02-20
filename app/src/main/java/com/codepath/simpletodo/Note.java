@@ -1,10 +1,12 @@
 package com.codepath.simpletodo;
 
+import java.io.Serializable;
+
 /**
  * Created by tonya on 2/15/17.
  */
 
-public class Note {
+public class Note implements Serializable{
 
     private String text;
     private String priority;

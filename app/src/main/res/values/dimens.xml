@@ -5,4 +5,14 @@
     <dimen name="edit_activity_margin1">20dp</dimen>
     <dimen name="edit_activity_margin2">25dp</dimen>
     <dimen name="edit_activity_font_large">22sp</dimen>
+
+    <dimen name="padding1">5dp</dimen>
+    <dimen name="padding2">10dp</dimen>
+    <dimen name="padding3">2dp</dimen>
+    <dimen name="padding4">35dp</dimen>
+    <dimen name="font_size1">15dp</dimen>
+    <dimen name="font_size2">12dp</dimen>
+    <dimen name="font_size3">18dp</dimen>
+    <dimen name="margin6">6dp</dimen>
+
 </resources>
