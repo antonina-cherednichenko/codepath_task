@@ -60,9 +60,11 @@ public class MainActivity extends AppCompatActivity implements EditItemDialogFra
     }
 
     @Override
-    public void onAddItemDialog(String newText) {
+    public void onAddItemDialog(String newText, String priority, String date) {
         Note newNote = new Note();
         newNote.setText(newText);
+        newNote.setPriority(priority);
+        newNote.setDate(date);
 
         items.add(newNote);
         itemsAdapter.notifyDataSetChanged();

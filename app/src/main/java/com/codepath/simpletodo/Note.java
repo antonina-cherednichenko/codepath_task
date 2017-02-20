@@ -7,6 +7,8 @@ package com.codepath.simpletodo;
 public class Note {
 
     private String text;
+    private String priority;
+    private String date;
 
     private int id;
 
@@ -24,6 +26,22 @@ public class Note {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     @Override

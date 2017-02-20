@@ -3,9 +3,16 @@
 
     <string name="edit_item">Edit Item</string>
     <string name="simple_todo">Simple Todo</string>
-    <string name="edit_action">Edit Item Below</string>
     <string name="save_edit_action">Save</string>
     <string name="enter_item">Enter a new item</string>
     <string name="add_item">Add Item</string>
     <string name="ok">Ok</string>
+
+
+    <string-array name="priority_array">
+        <item>High</item>
+        <item>Med</item>
+        <item>Low</item>
+    </string-array>
+
 </resources>

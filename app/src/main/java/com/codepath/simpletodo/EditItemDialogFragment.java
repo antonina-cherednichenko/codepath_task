@@ -46,7 +46,7 @@ public class EditItemDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.activity_edit_item, container);
-        getDialog().setTitle(R.string.edit_action);
+        getDialog().setTitle(R.string.edit_item);
         return rootView;
     }
 

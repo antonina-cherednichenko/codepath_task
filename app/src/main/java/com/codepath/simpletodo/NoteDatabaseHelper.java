@@ -17,7 +17,7 @@ import java.util.List;
 public class NoteDatabaseHelper extends SQLiteOpenHelper {
     // Database Info
     private static final String DATABASE_NAME = "SimpleTODODB";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Table Names
     private static final String TABLE_NOTES = "notes";
@@ -25,6 +25,8 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
     // Notes Table Columns
     private static final String KEY_NOTE_ID = "id";
     private static final String KEY_NOTE_TEXT = "text";
+    private static final String KEY_NOTE_PRIORITY = "priority";
+    private static final String KEY_NOTE_DATE = "date";
 
     private static NoteDatabaseHelper sInstance;
 
@@ -47,7 +49,9 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
         String CREATE_NOTES_TABLE = "CREATE TABLE " + TABLE_NOTES +
                 "(" +
                 KEY_NOTE_ID + " INTEGER PRIMARY KEY," + // Define a primary key
-                KEY_NOTE_TEXT + " TEXT" +
+                KEY_NOTE_TEXT + " TEXT," +
+                KEY_NOTE_PRIORITY + " TEXT," +
+                KEY_NOTE_DATE + " TEXT" +
                 ")";
         try {
             db.execSQL(CREATE_NOTES_TABLE);
@@ -80,6 +84,8 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     Note newNote = new Note();
                     newNote.setText(cursor.getString(cursor.getColumnIndex(KEY_NOTE_TEXT)));
+                    newNote.setPriority(cursor.getString(cursor.getColumnIndex(KEY_NOTE_PRIORITY)));
+                    newNote.setDate(cursor.getString(cursor.getColumnIndex(KEY_NOTE_DATE)));
                     newNote.setId(cursor.getInt(cursor.getColumnIndex(KEY_NOTE_ID)));
                     notes.add(newNote);
                 } while (cursor.moveToNext());
@@ -103,6 +109,8 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_NOTE_TEXT, note.getText());
+            values.put(KEY_NOTE_PRIORITY, note.getPriority());
+            values.put(KEY_NOTE_DATE, note.getDate());
             noteId = (int) db.insertOrThrow(TABLE_NOTES, null, values);
             db.setTransactionSuccessful();
 
@@ -124,6 +132,8 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_NOTE_TEXT, note.getText());
+            values.put(KEY_NOTE_PRIORITY, note.getPriority());
+            values.put(KEY_NOTE_DATE, note.getDate());
             noteId = db.update(TABLE_NOTES, values, KEY_NOTE_ID + "= ?", new String[]{Integer.toString(note.getId())});
             db.setTransactionSuccessful();
 
@@ -142,8 +152,6 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            ContentValues values = new ContentValues();
-            values.put(KEY_NOTE_TEXT, note.getText());
             noteId = db.delete(TABLE_NOTES, KEY_NOTE_ID + "= ?", new String[]{Integer.toString(note.getId())});
             db.setTransactionSuccessful();
 

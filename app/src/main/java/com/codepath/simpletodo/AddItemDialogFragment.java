@@ -7,8 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by tonya on 2/15/17.
@@ -18,9 +25,11 @@ public class AddItemDialogFragment extends DialogFragment {
 
     Button addItemButton;
     EditText addText;
+    Spinner spinner;
+    DatePicker dp;
 
     public interface AddItemDialogListener {
-        void onAddItemDialog(String newText);
+        void onAddItemDialog(String newText, String priority, String date);
     }
 
 
@@ -53,18 +62,31 @@ public class AddItemDialogFragment extends DialogFragment {
 
         addText = (EditText) view.findViewById(R.id.etNewItem);
         addItemButton = (Button) view.findViewById(R.id.btnAddItem);
+        spinner = (Spinner) view.findViewById(R.id.priority_spinner);
+        dp = (DatePicker) view.findViewById(R.id.dpResult);
 
-
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.priority_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
 
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddItemDialogListener listener = (AddItemDialogListener) getActivity();
-                listener.onAddItemDialog(addText.getText().toString());
-                dismiss();
+                String res = addText.getText().toString();
+                String priority = (String) spinner.getSelectedItem();
+                Calendar cal = Calendar.getInstance();
+                cal.set(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+                String date = sdf.format(cal.getTime());
+
+                if (res.length() > 0) {
+                    listener.onAddItemDialog(res, priority, date);
+                    dismiss();
+                }
+
 
             }
         });

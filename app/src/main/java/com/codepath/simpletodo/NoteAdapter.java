@@ -2,6 +2,7 @@ package com.codepath.simpletodo;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,20 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public void onBindViewHolder(NoteViewHolder viewHolder, int i) {
         Note note = notes.get(i);
         viewHolder.text.setText(note.getText());
+        viewHolder.date.setText(note.getDate());
+        viewHolder.priority.setText(note.getPriority());
+
+        switch (note.getPriority()) {
+            case "High":
+                viewHolder.priority.setTextColor(ContextCompat.getColor(context, R.color.high_priority));
+                break;
+            case "Med":
+                viewHolder.priority.setTextColor(ContextCompat.getColor(context, R.color.med_priority));
+                break;
+            case "Low":
+                viewHolder.priority.setTextColor(ContextCompat.getColor(context, R.color.low_priority));
+                break;
+        }
     }
 
     @Override
@@ -84,10 +99,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
         public TextView text;
+        public TextView date;
+        public TextView priority;
 
         public NoteViewHolder(View v) {
             super(v);
             text = (TextView) v.findViewById(R.id.note_text);
+            date = (TextView) v.findViewById(R.id.note_date);
+            priority = (TextView) v.findViewById(R.id.note_priority);
 
         }
     }
